@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Итог сессии: промпт-энхансер muse — финал</title>
+<style>
+  :root { --bg:#0d1117; --panel:#161b22; --border:#30363d; --text:#e6edf3; --muted:#8b949e;
+    --green:#3fb950; --amber:#d29922; --blue:#58a6ff; --purple:#bc8cff; --red:#f85149; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text);
+    font-family:-apple-system,'SF Pro Text','Segoe UI',Roboto,sans-serif; line-height:1.6;
+    padding:40px 24px; max-width:1200px; margin:0 auto; }
+  h1 { font-size:26px; margin-bottom:4px; }
+  h2 { font-size:18px; margin:36px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .sub { color:var(--muted); font-size:14px; margin-bottom:28px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; }
+  .item { background:var(--panel); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .item img { width:100%; display:block; cursor:zoom-in; }
+  .cap { padding:14px; font-size:13px; }
+  .cap .t { font-weight:700; font-size:14px; margin-bottom:6px; }
+  .cap .q { color:var(--muted); font-style:italic; margin-bottom:8px; }
+  .cap .r { font-size:12.5px; }
+  .badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-left:8px; }
+  .b-pass { background:rgba(63,185,80,0.15); color:var(--green); }
+  .b-warn { background:rgba(210,153,34,0.15); color:var(--amber); }
+  .b-fail { background:rgba(248,81,73,0.15); color:var(--red); }
+  .b-fix { background:rgba(88,166,255,0.15); color:var(--blue); }
+  .ref { display:flex; gap:20px; align-items:flex-start; background:var(--panel);
+    border:1px solid var(--border); border-radius:10px; padding:18px; margin:16px 0; }
+  .ref img { width:280px; border-radius:8px; cursor:zoom-in; }
+  .note { background:rgba(88,166,255,0.07); border:1px solid var(--border); border-radius:8px;
+    padding:14px 16px; font-size:13.5px; margin:14px 0; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px; }
+  th { text-align:left; color:var(--muted); font-size:12px; text-transform:uppercase; padding:8px 10px; border-bottom:2px solid var(--border); }
+  td { padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  dialog { border:none; background:transparent; max-width:94vw; padding:0; }
+  dialog::backdrop { background:rgba(0,0,0,0.85); }
+  dialog img { max-width:92vw; max-height:88vh; border-radius:8px; }
+  .chain { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:10px 0; font-size:13px; }
+  .chain .step { background:var(--panel); border:1px solid var(--border); padding:6px 12px; border-radius:8px; }
+  .chain .arrow { color:var(--muted); }
+  code { background:rgba(110,118,129,0.25); padding:2px 6px; border-radius:4px; font-size:12.5px; font-family:'SF Mono',Menlo,monospace; }
+</style>
+</head>
+<body>
+<h1>🏁 Итог сессии: промпт-энхансер muse</h1>
+<div class="sub">Ночь + день 8–9 октября · ветка <code>fix-prompt-enhancer</code> (13 коммитов) · Venice + под fipgen (RunPod RTX 5090, XN8, ~15–20 с/кадр)</div>
+
+<h2>Сводка</h2>
+<table>
+<tr><th>Метрика</th><th>Значение</th></tr>
+<tr><td>Найдено багов энхансера</td><td><b>9</b> (5 ночных + телефон/якорь/toy + член-vs-toy + cowgirl/душ)</td></tr>
+<tr><td>Фиксов в коде</td><td><b>13 коммитов</b>, все <code>go test</code> зелёные (60 с)</td></tr>
+<tr><td>Рендеров сделано</td><td>40+ кадров, все с QA-вердиктами vision-агентов</td></tr>
+<tr><td>Финальный секс-сет</td><td>cowgirl ✅ PASS · shower ✅ PASS · s1/s2/s7 ✅ PASS (v2) · s6/s8 ✅ PASS (v1)</td></tr>
+<tr><td>Айдентика лица</td><td>Высокая во всех сериях — одна персона на всех кадрах</td></tr>
+<tr><td>Классы багов коллеги</td><td>два человека: 0 · член-вместо-дилдо: 0 (разделены по POV-правилу) · ракурс: починен · глаза: 0 дефектов</td></tr>
+</table>
+
+<h2>Финальные кадры (лучшее из каждой серии)</h2>
+
+<div class="ref">
+  <img src="face.png" onclick="zoom(this.src)">
+  <div class="lbl" style="font-size:13.5px">
+    <b>Референс-пластина</b> — новая персона (ветка A, scratch): оливковая кожа, тёмные каштановые волнистые волосы, веснушки, лёгкий макияж. Одежда названа явно (правило пластины — иначе протекает наготой). Все сцены ниже построены от этого лица через identity-граф.
+  </div>
+</div>
+
+<div class="grid">
+
+<div class="item"><img src="cowgirl_v5.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">cowgirl v5 <span class="badge b-pass">PASS</span></div>
+<div class="q">«riding cowgirl» — 5 итераций</div>
+<div class="r">Осёдлывает фиолетовую toy (внутри), колени широко, корпус приподнят, одна персона, камера сбоку. Цепочка: сидела на пятках → toy рядом → toy прижата → 2 персоны (зеркало) → <b>финал: PASS</b>.</div>
+</div></div>
+
+<div class="item"><img src="shower_v3.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">shower v3 <span class="badge b-pass">PASS</span></div>
+<div class="q">«tocándote en la ducha»</div>
+<div class="r">Голая в душе, работающая рука у гениталий, вода/плитка/пар. Фиксы: «tocándote» в словарь + правило адаптации контакта к сеттингу.</div>
+</div></div>
+
+<div class="item"><img src="s1.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">«покажи как тебя трахают» <span class="badge b-pass">PASS</span></div>
+<div class="q">тест новой статьи being_fucked</div>
+<div class="r">Голая + toy у гениталий, ракурс от ступней. До фикса «трахают» не знала ни одна статья словаря — акт терялся целиком.</div>
+</div></div>
+
+<div class="item"><img src="s2.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">«quiero verte chupándosela» <span class="badge b-pass">PASS</span></div>
+<div class="q">минет + toy</div>
+<div class="r">Toy у губ, kneeling. До фикса: рефлексив -sela не знал словарь + oralAct не покрывал «ó» (RE2 \w = ASCII).</div>
+</div></div>
+
+<div class="item"><img src="s7.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">«сиськи и лицо крупно» <span class="badge b-pass">PASS</span></div>
+<div class="q">грудь крупно + лицо + айдентика</div>
+<div class="r">Голая грудь крупным планом, лицо чётко, веснушки/родинка на месте. В v1 сидела в футболке референса (пустой слот гардероба).</div>
+</div></div>
+
+<div class="item"><img src="s8.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">«masturbándote con tu dildo» <span class="badge b-pass">PASS</span></div>
+<div class="q">дилдо-правило</div>
+<div class="r">Toy у входа, в руке (не вертикально без опоры — фикс «sticker»-эффекта), ноги широко, глаза закрыты.</div>
+</div></div>
+
+<div class="item"><img src="s6.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">«pussy spread open» <span class="badge b-pass">PASS</span></div>
+<div class="q">крупный план</div>
+<div class="r">Лёжа, ноги широко, крупный план киски в центре — заказ выполнен точно с первого раза.</div>
+</div></div>
+
+<div class="item"><img src="dildo_2_v2.png" onclick="zoom(this.src)"><div class="cap">
+<div class="t">«с дилдо» v2 <span class="badge b-pass">PASS</span></div>
+<div class="q">после фикса якоря лица</div>
+<div class="r">Toy в руке между бёдер, голова набок (не «через плечо» на лёжа). Фикс: маршрут якоря обязан быть физичен для позы.</div>
+</div></div>
+
+</div>
+
+<h2>Цепочка починки cowgirl (главный кейс)</h2>
+<div class="chain">
+  <div class="step">v1: сидит на пятках, toy нет <span class="badge b-fail">FAIL</span></div>
+  <div class="arrow">→</div>
+  <div class="step">v2: toy рядом на одеяле <span class="badge b-fail">FAIL</span></div>
+  <div class="arrow">→</div>
+  <div class="step">v3: toy прижата, не внутри <span class="badge b-warn">½</span></div>
+  <div class="arrow">→</div>
+  <div class="step">v4: 2 персоны (зеркало+riding) <span class="badge b-fail">FAIL</span></div>
+  <div class="arrow">→</div>
+  <div class="step"><b>v5: осёдлывает, toy внутри</b> <span class="badge b-pass">PASS</span></div>
+</div>
+<div class="note">Корни: (1) статья словаря сама писала «сидя на пятках» — переписана на контактную геометрию; (2) VERBATIM-правило композиции — модель не может упрощать позы; (3) конфликт двух камер (riding + зеркало) — в проде режет keepOneCamera.</div>
+
+<h2>Коммиты ветки fix-prompt-enhancer</h2>
+<table>
+<tr><th>Коммит</th><th>Что</th></tr>
+<tr><td><code>752a911</code></td><td>Ночные фиксы словаря: en 4, chupándosela, selfi, статья being_fucked + ACT NEVER DROPS</td></tr>
+<tr><td><code>287a4dd</code></td><td>Ночной стенд: Python-порт энхансера + рендер-скрипты</td></tr>
+<tr><td><code>37e08f4</code></td><td>Телефон-левитация, якорь лёжа, toy-стикер</td></tr>
+<tr><td><code>4c409d5</code></td><td>HTML-отчёт с галереей валидации</td></tr>
+<tr><td><code>49bcdf0</code></td><td>VERBATIM-правило композиции</td></tr>
+<tr><td><code>e5c783c</code></td><td>Секс-сет: 1 лицо × 10 сцен + прод-инвариантный перегон</td></tr>
+<tr><td><code>8a8fd19</code></td><td>Вердикты обеих серий</td></tr>
+<tr><td><code>9a66b59</code></td><td><b>POV-исключение: реальный член ≠ toy</b> (выбор делает заказ)</td></tr>
+<tr><td><code>a0ddcae</code></td><td><b>cowgirl/shower: контактная геометрия + адаптация сеттинга</b></td></tr>
+<tr><td><code>bd17922</code></td><td>cowgirl v5 PASS — финал</td></tr>
+</table>
+
+<div class="note">
+<b>Готовность к выкату:</b> все фиксы в ветке, <code>go vet</code> / <code>go build</code> / <code>go test</code> (весь пакет personamedia) зелёные.
+Айдентика лица держится во всех сценах. Ветка готова к мержу <code>fix-prompt-enhancer</code> → <code>main</code>.
+</div>
+
+<script>
+function zoom(src) {
+  const d = document.getElementById('z');
+  document.getElementById('zi').src = src;
+  d.showModal();
+}
+</script>
+<dialog id="z" onclick="this.close()"><img id="zi" alt=""></dialog>
+</body>
+</html>
